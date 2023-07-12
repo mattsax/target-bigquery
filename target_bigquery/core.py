@@ -348,10 +348,6 @@ class BaseBigQuerySink(BatchSink):
             )
             time.sleep(2.5)  # Wait for eventual consistency
 
-        self.global_par_typ = target.par_typ
-        self.global_queue = target.queue
-        self.increment_jobs_enqueued = target.increment_jobs_enqueued
-
     def _is_upsert_candidate(self) -> bool:
         """Determine if this stream is an upsert candidate based on user configuration."""
         upsert_selection = self.config.get("upsert", False)
@@ -482,13 +478,13 @@ class BaseBigQuerySink(BatchSink):
         """Called before state is emitted to stdout."""
         pass
 
-    @staticmethod
-    @abstractmethod
-    def worker_cls_factory(
-        worker_executor_cls: Type["Process"], config: Dict[str, Any]
-    ) -> Union[Type[BaseWorker], Type["Process"]]:
-        """Return a worker class for the given parallelization type."""
-        raise NotImplementedError
+    # @staticmethod
+    # @abstractmethod
+    # def worker_cls_factory(
+    #     worker_executor_cls: Type["Process"], config: Dict[str, Any]
+    # ) -> Union[Type[BaseWorker], Type["Process"]]:
+    #     """Return a worker class for the given parallelization type."""
+    #     raise NotImplementedError
 
     def clean_up(self) -> None:
         """Clean up the target table."""
